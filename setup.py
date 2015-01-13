@@ -3,7 +3,7 @@ import os
 import sys
 from setuptools import setup,find_packages
 
-package_data = {'':
+package_data = {'easy_lausanne':
                 ['data/colortable_and_gcs/*.txt',
                  'data/colortable_and_gcs/my_atlas_gcs/*.gcs',
                  'data/parcellation/lausanne2008/*.*',
@@ -12,6 +12,7 @@ package_data = {'':
                  'data/parcellation/lausanne2008/resolution258/*.*',
                  'data/parcellation/lausanne2008/resolution500/*.*',
                  'data/parcellation/lausanne2008/resolution1015/*.*',
+                 
                  ]}
     
 setup(name='Easy Lausanne',
@@ -22,5 +23,6 @@ setup(name='Easy Lausanne',
       url='',
       scripts = ['scripts/easy_lausanne', 'scripts/atlas_dilate'],
       packages = find_packages(),
-      package_data = package_data
+      package_data = package_data,
+      include_package_data=True
      )
