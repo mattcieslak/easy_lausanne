@@ -15,12 +15,12 @@ package_data = {'':
                  ]}
     
 setup(name='Easy Lausanne',
-      version="0.1",
+      version="0.5",
       description="A minimal set of code to produce the Lausanne atlases",
       author='Matt Cieslak',
       author_email='matthew.cieslak at psych.ucsb.edu',
       url='',
-      scripts = ['scripts/easy_lausanne'],
+      scripts = ['scripts/easy_lausanne', 'scripts/atlas_dilate'],
       packages = find_packages(),
       package_data = package_data
      )

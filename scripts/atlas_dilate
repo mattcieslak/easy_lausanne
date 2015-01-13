@@ -1,0 +1,104 @@
+#!/usr/bin/env python
+import numpy as np
+import nibabel as nib
+from scipy.stats import mode
+import sys, os
+
+
+print "loading", sys.argv[1]
+mds = nib.load(sys.argv[1])
+out_fname = sys.argv[2]
+
+# get voxels inside a 1-voxel padding
+data = mds.get_data().astype(np.int64)
+ctr_data = data.copy()[1:-1,1:-1,1:-1]
+orig_mask = (ctr_data > 0).astype(np.uint64)
+dilated = np.zeros_like(orig_mask)
+
+views = np.concatenate(
+  [
+    # CENTER Z SLICE
+    #center  =
+    data[1:-1, 1:-1, 1:-1, np.newaxis],
+    #left    =
+    data[ :-2, 1:-1, 1:-1, np.newaxis],
+    #right   =
+    data[2:  , 1:-1, 1:-1, np.newaxis],
+    #fcenter =
+    data[1:-1,  :-2, 1:-1, np.newaxis],
+    #fleft   =
+    data[ :-2,  :-2, 1:-1, np.newaxis],
+    #fright  =
+    data[2:  ,  :-2, 1:-1, np.newaxis],
+    #bcenter =
+    data[1:-1, 2:  , 1:-1, np.newaxis],
+    #bleft   =
+    data[ :-2, 2:  , 1:-1, np.newaxis],
+    #bright  =
+    data[2:  , 2:  , 1:-1, np.newaxis],
+
+
+    # TOP Z SLICE
+    #tcenter  =
+    data[1:-1, 1:-1,  :-2, np.newaxis],
+    #tleft    =
+    data[ :-2, 1:-1,  :-2, np.newaxis],
+    #tright   =
+    data[2:  , 1:-1,  :-2, np.newaxis],
+    #tfcenter =
+    data[1:-1,  :-2,  :-2, np.newaxis],
+    #tfleft   =
+    data[ :-2,  :-2,  :-2, np.newaxis],
+    #tfright  =
+    data[2:  ,  :-2,  :-2, np.newaxis],
+    #tbcenter =
+    data[1:-1, 2:  ,  :-2, np.newaxis],
+    #tbleft   =
+    data[ :-2, 2:  ,  :-2, np.newaxis],
+    #tbright  =
+    data[2:  , 2:  ,  :-2, np.newaxis],
+
+    # BOTTOM Z SLICE
+    #bcenter  =
+    data[1:-1, 1:-1, 2:  , np.newaxis],
+    #bleft    = d
+    data[ :-2, 1:-1, 2:  , np.newaxis],
+    #bright   =
+    data[2:  , 1:-1, 2:  , np.newaxis],
+    #bfcenter =
+    data[1:-1,  :-2, 2:  , np.newaxis],
+    #bfleft   =
+    data[ :-2,  :-2, 2:  , np.newaxis],
+    #bfright  =
+    data[2:  ,  :-2, 2:  , np.newaxis],
+    #bbcenter =
+    data[1:-1, 2:  , 2:  , np.newaxis],
+    #bbleft   =
+    data[ :-2, 2:  , 2:  , np.newaxis],
+    #bbright  =
+    data[2:  , 2:  , 2:  , np.newaxis]
+  ], axis=3)
+
+
+# fill in the dilated volume center
+dilated = views.sum(axis=3) > 0
+both = dilated + orig_mask
+
+new_voxels = (both == 1)
+lbls = views[new_voxels,:]
+
+print "Dilating..."
+dilation_labels = np.array(
+    [mode(l[l>0])[0][0] for l in lbls],
+    dtype=lbls.dtype)
+
+ctr_data[new_voxels] = dilation_labels
+
+print "saving", sys.argv[2]
+new_nim_data =np.zeros_like(data)
+new_nim_data[1:-1,1:-1,1:-1] = ctr_data
+new_nim = nib.Nifti1Image(new_nim_data,
+                          mds.get_affine(),
+                          header=mds.get_header())
+
+new_nim.to_filename(out_fname)

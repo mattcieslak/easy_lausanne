@@ -46,11 +46,31 @@ $ easy_lausanne \
      --output_dir /where/you/want/results
 ```
 
+This python package also includes a utility for dilating these cortical
+regions. You can use ``atlas_dilate`` like so.
+
+```bash
+$ atlas_dilate input_atlas.nii.gz thickened_by_1_voxel.nii.gz
+```
+
+Here is the original ROIv_scale33 from a subject
+
+![scale33 ROIv](doc/ROIv_scale33.png)
+
+And here is the dilated version
+
+![scale33 thick](doc/thick1_scale33.png)
+
+``atlas_dilate`` works by finding all non-labeled voxels that neighbor at
+least one labeled voxel.  It extracts the labels from all neighboring voxels
+and fills the originally-zero voxel with the statistical mode of its neighbors.
+No labeled voxel is ever overwritten with a new value.
+
 Proof of usability
 ===================
 
 I ran a DSI dataset through the connectomemapper and resampled the Lausanne2008
-labels into native B0 space.  easy_lausanne was then used on a clean copy of
+labels into native B0 space.  ``easy_lausanne`` was then used on a clean copy of
 this data to generate the atlases directly in B0 space.  Here are plots of 
 the overlap in voxels and the relative sizes of each region for the cmp-generated
 and easy_lausanne-generated atlases.
@@ -84,3 +104,14 @@ Plots
 
 ![scale250 percent](doc/scale250.region_percentage.png)
 
+Credits
+========
+This source code was sponsored by the U.S. Army Research Office and the 
+content of the information does not necessarily reflect the position or
+the policy of the government, and no official endorsement should be inferred.
+
+Authors
+-------
+
+ * Matt Cieslak
+ * Scott Grafton
