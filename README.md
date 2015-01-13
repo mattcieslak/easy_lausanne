@@ -5,7 +5,7 @@ Easy Lausanne
 This is an extremely stripped-down version of the connectome mapper,
 all it does is create the Lausanne2008 parcellations from an 
 existing FreeSurfer directory and align them to a target volume (BOLD or B0)
-using bbregister.
+using bbregister. 
 
 Prerequisites:
 ---------------
@@ -28,10 +28,15 @@ $ git clone https://github.com/mattcieslak/easy_lausanne.git
 $ cd easy_lausanne
 $ python setup.py install
 ```
+This installs the ``easy_lausanne`` executable on your path. 
 
-This installs the easy_lausanne executable on your path. Assuming FreeSurfer 
-is installed and you've run the Freesurfer setup script, you use easy_lausanne
-to create the Lausanne2008 atlases aligned to VOLUME.nii.gz for SUBJECT
+Example use
+--------------
+
+Assuming FreeSurfer is installed, you've run the Freesurfer setup script,
+and recon-all has completely finished for "SUBJECT",
+you use easy_lausanne to create the Lausanne2008 atlases aligned to 
+VOLUME.nii.gz for "SUBJECT"
 
 ```bash
 $ easy_lausanne \
