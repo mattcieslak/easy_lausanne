@@ -24,7 +24,7 @@ Installation
 --------------
 
 ```bash
-$ git clone git@github.com:mattcieslak/easy_lausanne.git
+$ git clone https://github.com/mattcieslak/easy_lausanne.git
 $ cd easy_lausanne
 $ python setup.py install
 ```
