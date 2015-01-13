@@ -11,7 +11,7 @@ Prerequisites:
 ---------------
  * FreeSurfer
  * FSL
- * numpy/scipy/nibabel
+ * numpy/scipy/nibabel/networkx
 
 *All the hard work was done by the LTS5 folks and they 
 should be credited if you use these atlases in your work.*
