@@ -17,6 +17,7 @@ parser.add_argument("--subject_id",action="store",dest="subject_id")
 parser.add_argument("--target_volume",action="store",dest="target_volume")
 parser.add_argument("--output_dir",action="store",dest="output_dir")
 parser.add_argument("--target_type",action="store",dest="target_type")
+parser.add_argument("--dsi_studio",action="store_true",dest="dsi_studio")
 
 
 if __name__ == "__main__":

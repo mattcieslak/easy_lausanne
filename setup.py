@@ -3,7 +3,7 @@ import os
 import sys
 from setuptools import setup,find_packages
 
-package_data = {'easy_lausanne':
+package_data = {'':
                 ['data/colortable_and_gcs/*.txt',
                  'data/colortable_and_gcs/my_atlas_gcs/*.gcs',
                  'data/parcellation/lausanne2008/*.*',
