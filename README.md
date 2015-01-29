@@ -28,7 +28,7 @@ $ git clone https://github.com/mattcieslak/easy_lausanne.git
 $ cd easy_lausanne
 $ python setup.py install
 ```
-This installs the ``easy_lausanne`` executable on your path. 
+This installs the ``easy_lausanne`` and ``atlas_dilate`` executables on your path. 
 
 Example use
 --------------
@@ -65,6 +65,14 @@ And here is the dilated version
 least one labeled voxel.  It extracts the labels from all neighboring voxels
 and fills the originally-zero voxel with the statistical mode of its neighbors.
 No labeled voxel is ever overwritten with a new value.
+
+Notes
+======
+
+If registering to a BOLD image, the --target_type argument should be "bold".  If
+it's a B0 volume from a DWI, then use "diffusion".  If there is poor alignment between
+the FreeSurfer surfaces and the B0 volume, you can export the native space GFA/QA/FA
+image and specify --target_type anisotropy.
 
 Proof of usability
 ===================

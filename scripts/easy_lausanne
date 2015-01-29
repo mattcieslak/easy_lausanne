@@ -45,8 +45,8 @@ if __name__ == "__main__":
         print "Fatal: no folder found for %s in %s" % (args.subject_id,
                                             os.environ["SUBJECTS_DIR"])
         sys.exit(1)
-    if not args.target_type in ("bold","diffusion"):
-        print "Fatal: -target_type mut be either bold or diffusion"
+    if not args.target_type in ("bold","diffusion","anisotropy"):
+        print "Fatal: -target_type mut be either bold, diffusion, or anisotropy"
         sys.exit(1)
         
     if args.dsi_studio:

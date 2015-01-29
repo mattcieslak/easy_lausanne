@@ -31,6 +31,9 @@ def bb_regT12b0(subject_id, target_volume, output_directory, target_type):
         additional_bbreg_args += '--dti'
     elif target_type == "bold":
         additional_bbreg_args += '--bold'
+    elif target_type == "anisotropy":
+        additional_bbreg_args += '--t1'
+        
         
 
     # Necessary file paths
