@@ -12,8 +12,8 @@ import subprocess
 import sys
 import shutil 
 
-from command import runCmd, getLog
-log = getLog("test.log")
+from command import runCmd, getLog, log
+#log = getLog("test.log")
 
 SUBJECTS_DIR=os.getenv("SUBJECTS_DIR")
 

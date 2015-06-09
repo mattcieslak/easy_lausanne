@@ -76,7 +76,7 @@ lausanne_spec = {
                }
 
 def create_annot_label(subject_id):
-    log = getLog("tmp.log")
+    #log = getLog("tmp.log")
     log.info("Create the cortical labels necessary for our ROIs")
     log.info("=================================================")
 
@@ -671,7 +671,7 @@ def crop_and_move_WM_and_GM(subject_id, output_dir):
 
 def inspect(output_dir):
     """ Inspect the results of this stage """
-    log = getLog("tmp.log")
+    #log = getLog("tmp.log")
     log.info("Check parcellation")
 
     reg_path = output_dir
