@@ -7,6 +7,8 @@ all it does is create the Lausanne2008 parcellations from an
 existing FreeSurfer directory and align them to a target volume (BOLD or B0)
 using bbregister. 
 
+*update 7/10/15* you can use the --run_500 option to generate scale500 along with the other scales
+
 Prerequisites:
 ---------------
  * FreeSurfer
