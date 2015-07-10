@@ -14,7 +14,7 @@ from command import *
 from maskcreation import lausanne_spec
 
 
-def apply_lin_registration(subject_id, output_dir,target_volume):
+def apply_lin_registration(subject_id, output_dir,target_volume,include500):
 
     log.info("Apply the linear REGISTRATION TRANSFORM to the output of FreeSurfer (WM+GM)")
     log.info("===========================================================================")
@@ -43,6 +43,7 @@ def apply_lin_registration(subject_id, output_dir,target_volume):
     # warp fsmask_1mm and parcellations
     warp_files = []
     scales = ["scale33", "scale60", "scale125", "scale250"]
+    if include500: scales +=  [ "scale500"]
     thicks = ["ROI", "ROIv"]
     for scale in scales:
         for thick in thicks:

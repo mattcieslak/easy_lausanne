@@ -18,6 +18,8 @@ parser.add_argument("--target_volume",action="store",dest="target_volume")
 parser.add_argument("--output_dir",action="store",dest="output_dir")
 parser.add_argument("--target_type",action="store",dest="target_type")
 parser.add_argument("--dsi_studio",action="store_true",dest="dsi_studio")
+parser.add_argument("--include500",action="store_true",dest="run_500")
+parser.add_argument("--nocompat",action="store_true",dest="nocompat")
 
 
 if __name__ == "__main__":
@@ -78,7 +80,7 @@ if __name__ == "__main__":
                 )
     
     # create the annot labels
-    create_annot_label(args.subject_id)
+    create_annot_label(args.subject_id,  args.run_500)
     
     # create the rois (in a volume)
     create_roi(args.subject_id)
@@ -92,5 +94,8 @@ if __name__ == "__main__":
     # register the atlases to the target volume
     apply_lin_registration(args.subject_id,
                            args.output_dir,
-                           target_volume)
+                           target_volume,
+                           args.run_500
+                           )
+    
     

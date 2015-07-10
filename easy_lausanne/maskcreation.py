@@ -65,17 +65,19 @@ lausanne_spec = {
                             'fs_label_subdir_name' : 'regenerated_%s_250',
                             'subtract_from_wm_mask' : 1,
                             },
-#                'scale500' : {'number_of_regions' : 1015,
-#                            'node_information_graphml' : op.join(graphml_path, 'resolution1015', 
-#                                'resolution1015.graphml'),
-#                            'surface_parcellation' : None,
-#                            'volume_parcellation' : None,
-#                            'fs_label_subdir_name' : 'regenerated_%s_500',
-#                            'subtract_from_wm_mask' : 1,
-#                            },
                }
 
-def create_annot_label(subject_id):
+def create_annot_label(subject_id,run_500):
+    global lausanne_spec
+    if run_500:
+                lausanne_spec['scale500' ] = {'number_of_regions' : 1015,
+                            'node_information_graphml' : op.join(graphml_path, 'resolution1015', 
+                                'resolution1015.graphml'),
+                            'surface_parcellation' : None,
+                            'volume_parcellation' : None,
+                            'fs_label_subdir_name' : 'regenerated_%s_500',
+                            'subtract_from_wm_mask' : 1,
+                            }
     #log = getLog("tmp.log")
     log.info("Create the cortical labels necessary for our ROIs")
     log.info("=================================================")
