@@ -528,6 +528,14 @@ def crop_and_move_datasets(subject_id,output_dir):
           ]
 
     for p in lausanne_spec.keys():
+        if not op.exists(op.join(reg_path, p)):
+            log.info("Making directory %s" % op.join(reg_path, p))
+            try:
+                os.makedirs(op.join(reg_path, p))
+            except Exception, e:
+                print e
+        else:
+            log.info("Directory %s already exists" % op.join(reg_path, p))
         ds.append( (op.join(fs_dir, 'label', 'ROI_%s.nii.gz' % p), op.join(reg_path, p, 'ROI_HR_th.nii.gz')) )
         ds.append( (op.join(fs_dir, 'label', 'ROIv_%s.nii.gz' % p), op.join(reg_path, p, 'ROIv_HR_th.nii.gz')) )
 
