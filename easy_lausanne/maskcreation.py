@@ -167,7 +167,7 @@ def create_annot_label(subject_id,run_500):
         op.join(fs_dir, 'label', 'cc_unknown.nii.gz') )
     runCmd( mri_cmd, log )
 
-    runCmd( 'mris_volmask "%s"' % subject_id, log)
+    #runCmd( 'mris_volmask "%s"' % subject_id, log) #skip this now nd use existing ribbon.mgz
 
     mri_cmd = 'mri_convert -i "%s/mri/ribbon.mgz" -o "%s/mri/ribbon.nii.gz"' % (fs_dir, fs_dir)
     runCmd( mri_cmd, log )
@@ -359,14 +359,27 @@ def create_wm_mask(subject_id, output_dir):
     # load ribbon as basis for white matter mask
     fsmask = ni.load(op.join(fs_dir, 'mri', 'ribbon.nii.gz'))
     fsmaskd = fsmask.get_data()
+    
+    # Check ribbon values to select correct WM labels
+    uvals,ucounts = np.unique(fsmaskd, return_counts=True)
+    if np.array_equal(uvals,np.array([0, 10, 20, 110, 120])):
+        log.info('ribbon file uses 20,120 for white matter: %s' % fsmask.get_filename())
+        fsval_wm_lh = 20
+        fsval_wm_rh = 120
+    elif np.array_equal(uvals,np.array([0, 2, 3, 41, 42])):
+        log.info('ribbon file uses FS-standard 2,41 for white matter: %s' % fsmask.get_filename())
+        fsval_wm_lh = 2
+        fsval_wm_rh = 41
+    else:
+        raise Exception('Unknown ribbon values in file %s' % fsmask.get_filename())
 
     wmmask = np.zeros( fsmask.get_data().shape )
 
     # these data is stored and could be extracted from fs_dir/stats/aseg.txt
 
     # extract right and left white matter 
-    idx_lh = np.where(fsmaskd == 120)
-    idx_rh = np.where(fsmaskd == 20)
+    idx_lh = np.where(fsmaskd == fsval_wm_lh)
+    idx_rh = np.where(fsmaskd == fsval_wm_rh)
 
     wmmask[idx_lh] = 1
     wmmask[idx_rh] = 1
