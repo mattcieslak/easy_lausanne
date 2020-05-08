@@ -1,16 +1,16 @@
-=================
-Easy Lausanne
-=================
+
+# Easy Lausanne
+
 
 This is an extremely stripped-down version of the connectome mapper,
 all it does is create the Lausanne2008 parcellations from an 
 existing FreeSurfer directory and align them to a target volume (BOLD or B0)
 using bbregister. 
 
+*update 5/8/20* This software was created with an old version of python and freesurfer. There will likely be problems with newer versions of either, and PRs would be welcome! If you make one, please add yourself to the Authors section below.
 *update 7/10/15* you can use the --run_500 option to generate scale500 along with the other scales
 
-Prerequisites:
----------------
+## Prerequisites:
  * FreeSurfer
  * FSL
  * numpy/scipy/nibabel/networkx
@@ -22,8 +22,8 @@ should be credited if you use these atlases in your work.*
 > R. Meuli, P. Hagmann and J.-P. Thiran The Connectome Mapper: An Open-Source 
 > Processing Pipeline to Map Connectomes with MRI. Plos One 7(12):e48121 (2012)
 
-Installation
---------------
+## Installation
+
 
 ```bash
 $ git clone https://github.com/mattcieslak/easy_lausanne.git
@@ -32,8 +32,8 @@ $ python setup.py install
 ```
 This installs the ``easy_lausanne`` and ``atlas_dilate`` executables on your path. 
 
-Example use
---------------
+## Example use
+
 
 Assuming FreeSurfer is installed, you've run the Freesurfer setup script,
 and recon-all has completely finished for "SUBJECT",
@@ -68,16 +68,16 @@ least one labeled voxel.  It extracts the labels from all neighboring voxels
 and fills the originally-zero voxel with the statistical mode of its neighbors.
 No labeled voxel is ever overwritten with a new value.
 
-Notes
-======
+### Notes
+
 
 If registering to a BOLD image, the --target_type argument should be "bold".  If
 it's a B0 volume from a DWI, then use "diffusion".  If there is poor alignment between
 the FreeSurfer surfaces and the B0 volume, you can export the native space GFA/QA/FA
 image and specify --target_type anisotropy.
 
-Proof of usability
-===================
+### Proof of usability
+
 
 I ran a DSI dataset through the connectomemapper and resampled the Lausanne2008
 labels into native B0 space.  ``easy_lausanne`` was then used on a clean copy of
@@ -85,18 +85,17 @@ this data to generate the atlases directly in B0 space.  Here are plots of
 the overlap in voxels and the relative sizes of each region for the cmp-generated
 and easy_lausanne-generated atlases.
 
-Voxelwise labeling analysis (blue)
----------------------------------
+### Voxelwise labeling analysis (blue)
+
 Here each non-zero voxel was compared between the two atlases. The label value
 in each voxel is plotted.
 
-Region size comparison (red)
--------------------------------
+### Region size comparison (red)
+
 The proportion of nonzero voxels for each region label is plotted for both versions 
 of the Lausanne2008 atlas.
 
-Plots
---------
+### Plots
 
 ![scale33 Voxelwise](doc/scale33.voxelwise_corr.png)
 
@@ -114,14 +113,14 @@ Plots
 
 ![scale250 percent](doc/scale250.region_percentage.png)
 
-Credits
-========
+## Credits
+
 This source code was sponsored by the U.S. Army Research Office and the 
 content of the information does not necessarily reflect the position or
 the policy of the government, and no official endorsement should be inferred.
 
-Authors
--------
+## Authors
+
 
  * Matt Cieslak
  * Scott Grafton
