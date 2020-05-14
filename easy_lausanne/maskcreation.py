@@ -189,7 +189,7 @@ def create_roi(subject_id):
     fs_label_dir = op.join(fs_dir, 'label')
     # load aseg volume
     aseg = ni.load(op.join(fs_dir, 'mri', 'aseg.nii.gz'))
-	asegdims = aseg.shape
+    asegdims = aseg.shape
     asegd = aseg.get_data()	# numpy.ndarray
 
     # identify cortical voxels, right (3) and left (42) hemispheres
