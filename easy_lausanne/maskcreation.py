@@ -189,6 +189,7 @@ def create_roi(subject_id):
     fs_label_dir = op.join(fs_dir, 'label')
     # load aseg volume
     aseg = ni.load(op.join(fs_dir, 'mri', 'aseg.nii.gz'))
+    asegdims = aseg.shape
     asegd = aseg.get_data()	# numpy.ndarray
 
     # identify cortical voxels, right (3) and left (42) hemispheres
@@ -219,7 +220,7 @@ def create_roi(subject_id):
     temp = zip(values, parkeys)
     temp.sort(reverse=True)
     values, parkeys = zip(*temp)
-    roisMax = np.zeros( (256, 256, 256), dtype=np.int16 ) # numpy.ndarray
+    roisMax = np.zeros( (asegdims[0], asegdims[1], asegdims[2]), dtype=np.int16 ) # numpy.ndarray
     for i,parkey in enumerate(parkeys):
         parval = lausanne_spec[parkey]
 
@@ -228,8 +229,8 @@ def create_roi(subject_id):
         pg = nx.read_graphml(parval['node_information_graphml'])
 
         # each node represents a brain region
-        # create a big 256^3 volume for storage of all ROIs
-        rois = np.zeros( (256, 256, 256), dtype=np.int16 ) # numpy.ndarray
+        # create a volume the same size as aseg for storage of all ROIs
+        rois = np.zeros( (asegdims[0], asegdims[1], asegdims[2]), dtype=np.int16 ) # numpy.ndarray
 
         for brk, brv in pg.nodes_iter(data=True):   # slow loop
 
@@ -561,7 +562,7 @@ def crop_and_move_datasets(subject_id,output_dir):
         if not op.exists(d[0]):
             raise Exception('File %s does not exist.' % d[0])
         # reslice to original volume because the roi creation with freesurfer
-        # changed to 256x256x256 resolution
+        # changed to the resolution of aseg/orig
         mri_cmd = 'mri_convert -rl "%s" -rt nearest "%s" -nc "%s"' % (orig, d[0], d[1])
         runCmd( mri_cmd,log )
 
@@ -687,7 +688,7 @@ def crop_and_move_WM_and_GM(subject_id, output_dir):
         if not op.exists(d[0]):
             raise Exception('File %s does not exist.' % d[0])
         # reslice to original volume because the roi creation with freesurfer
-        # changed to 256x256x256 resolution
+        # changed to the resolution of aseg/orig
         mri_cmd = 'mri_convert -rl "%s" -rt nearest "%s" -nc "%s"' % (orig, d[0], d[1])
         runCmd( mri_cmd,log )
 
